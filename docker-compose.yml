@@ -1,0 +1,42 @@
+version: '3'
+
+services:
+  asynqmon:
+    image: hibiken/asynqmon:latest
+    container_name: asynqmon
+    ports:
+      - 8980:8080
+    command:
+      - '--redis-addr=redis:6379'
+      - '--redis-password=G62m50oigInC3111'
+    restart: always
+    networks:
+      - looklook_net
+    depends_on:
+      - redis
+
+  #redis容器
+  redis:
+    image: redis:6.2.5
+    container_name: redis
+    ports:
+      - 36379:6379
+    environment:
+      # 时区上海
+      TZ: Asia/Shanghai
+    volumes:
+      # 数据文件
+      - ./data/redis/data:/data:rw
+    command: "redis-server --requirepass G62m50oigInC3111  --appendonly yes"
+    privileged: true
+    restart: always
+    networks:
+      - looklook_net
+
+networks:
+  looklook_net:
+    driver: bridge
+    ipam:
+      config:
+        - subnet: 172.20.0.0/16
+
