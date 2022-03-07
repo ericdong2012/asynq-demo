@@ -73,7 +73,7 @@ func emailMqHandler(ctx context.Context, t *asynq.Task) error {
 	client := asynq.NewClient(
 		asynq.RedisClientOpt{
 			Addr:     "127.0.0.1:36379",
-			Password: "G62m50oigInC30sf",
+			Password: "G62m50oigInC3111",
 		},
 	)
 
